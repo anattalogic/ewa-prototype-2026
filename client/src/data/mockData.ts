@@ -280,8 +280,10 @@ export const glBalances: GLBalance[] = [
 
 export const settlements: Settlement[] = [
   { id: "SET-001", companyId: "cmp-003", companyName: "Skyline Trading Enterprise", submittedBy: "HR Admin", totalAmount: 126000, paymentMethod: "Bank Transfer", bankReference: "KBZ-TXN-20260709-4421", screenshot: true, status: "SUBMITTED", submittedAt: "2026-07-11 08:30" },
-  { id: "SET-002", companyId: "cmp-004", companyName: "Quick Print Services", submittedBy: "Finance Officer", totalAmount: 131000, paymentMethod: "KBZ Pay", bankReference: "KBZ-TXN-20260710-8832", screenshot: true, status: "CHECKER_APPROVED", submittedAt: "2026-07-10 14:00", makerVerifiedAt: "2026-07-10 15:30", checkerApprovedAt: "2026-07-10 16:00" },
+  { id: "SET-002", companyId: "cmp-004", companyName: "Quick Print Services", submittedBy: "Finance Officer", totalAmount: 131000, paymentMethod: "KBZ Pay", bankReference: "KBZ-TXN-20260710-8832", screenshot: true, status: "MAKER_APPROVED", submittedAt: "2026-07-10 14:00", makerVerifiedAt: "2026-07-10 15:30", checkerApprovedAt: undefined },
   { id: "SET-003", companyId: "cmp-001", companyName: "Myanmar Tech Solutions", submittedBy: "HR Admin", totalAmount: 500000, paymentMethod: "Bank Transfer", bankReference: "KBZ-TXN-20260708-1155", screenshot: true, status: "CHECKER_APPROVED", submittedAt: "2026-07-08 14:00", makerVerifiedAt: "2026-07-08 15:00", checkerApprovedAt: "2026-07-08 15:45" },
+  { id: "SET-004", companyId: "cmp-005", companyName: "Fresh Mart Groceries", submittedBy: "Ops Lead", totalAmount: 80000, paymentMethod: "CB Pay", bankReference: "CBZ-TXN-20260709-9912", screenshot: false, status: "SUBMITTED", submittedAt: "2026-07-11 10:00" },
+  { id: "SET-005", companyId: "cmp-002", companyName: "Golden Harvest Trading", submittedBy: "Finance Officer", totalAmount: 50000, paymentMethod: "MoPayment", bankReference: "MZ-TXN-20260706-7743", screenshot: true, status: "REJECTED", submittedAt: "2026-07-06 09:00", makerVerifiedAt: undefined, checkerApprovedAt: undefined },
 ];
 
 export const riskAssessments: RiskAssessment[] = [

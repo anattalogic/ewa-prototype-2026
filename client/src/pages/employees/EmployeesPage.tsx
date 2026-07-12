@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { formatMMK, employees, type Employee } from "@/data/mockData";
+import { EmployeeDetailSheet } from "@/components/EmployeeDetailSheet";
 import { Search, Filter, Download, Plus, MoreHorizontal, ShieldCheck, ShieldX, CheckCircle2, Clock, AlertCircle, UserCheck, Lock } from "lucide-react";
 import { useView } from "@/contexts/ViewContext";
 
@@ -55,6 +56,7 @@ export function EmployeesPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [companyFilter, setCompanyFilter] = useState("All");
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
 
   const filtered = employees.filter(e => {
     if (statusFilter !== "All" && e.status !== statusFilter) return false;
@@ -135,7 +137,7 @@ export function EmployeesPage() {
               <TableHead className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Verification</TableHead>
               <TableHead className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Status</TableHead>
               <TableHead className="text-[10px] font-bold uppercase tracking-widest text-slate-500">KYC</TableHead>
-              <TableHead className="w-8"></TableHead>
+              <TableHead className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -166,8 +168,9 @@ export function EmployeesPage() {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Button variant="ghost" size="icon" className="h-7 w-7">
-                    <MoreHorizontal className="w-3.5 h-3.5 text-slate-400" />
+                  <Button variant="ghost" size="sm" className="h-7 text-[10px] font-medium text-[#0ea5e9] hover:bg-[#0ea5e9]/10"
+                    onClick={() => setSelectedEmployee(emp)}>
+                    <CheckCircle2 className="w-3 h-3 mr-1" /> View Detail
                   </Button>
                 </TableCell>
               </TableRow>
@@ -181,6 +184,8 @@ export function EmployeesPage() {
           </div>
         )}
       </div>
+
+      <EmployeeDetailSheet employee={selectedEmployee} onClose={() => setSelectedEmployee(null)} />
 
       {/* Workflow Legend */}
       <div className="bg-white border border-slate-200/60 p-4">
