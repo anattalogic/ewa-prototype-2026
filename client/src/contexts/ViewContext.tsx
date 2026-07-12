@@ -25,7 +25,13 @@ export type ModuleId =
   | "workflow"
   | "writeoff"
   | "form-creator"
-  | "errors";
+  | "errors"
+  | "disbursement"
+  | "bank-integration"
+  | "service-catalog"
+  | "fee-hierarchy"
+  | "employee-groups"
+  | "limitations";
 
 interface ModuleConfig {
   id: ModuleId;
@@ -53,6 +59,12 @@ export const MODULE_REGISTRY: ModuleConfig[] = [
   { id: "writeoff", label: "Write-Off Management", icon: "trash-2", views: ["Finance", "Risk"] },
   { id: "form-creator", label: "Form Creator", icon: "layout-template", views: ["Platform Admin"] },
   { id: "errors", label: "Error Messages", icon: "alert-circle", views: ["Platform Admin"] },
+  { id: "disbursement", label: "Disbursement Engine", icon: "zap", views: ["Operations", "Finance", "Platform Admin"] },
+  { id: "bank-integration", label: "Bank Integration", icon: "landmark", views: ["Finance", "Operations", "Platform Admin"] },
+  { id: "service-catalog", label: "Service Catalog", icon: "layers", views: ["Platform Admin", "Operations"] },
+  { id: "fee-hierarchy", label: "Fee Hierarchy Engine", icon: "pyramid", views: ["Platform Admin", "Finance"] },
+  { id: "employee-groups", label: "Employee Groups", icon: "users", views: ["HR", "Operations", "Platform Admin"] },
+  { id: "limitations", label: "Transaction Limits", icon: "gauge", views: ["Platform Admin", "Risk", "Operations"] },
 ];
 
 interface ViewContextType {

@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatMMK, employees, transactions, type Employee, type Transaction } from "@/data/mockData";
+import { TransactionTimeline } from "@/components/TransactionTimeline";
 import {
   ShieldCheck, ShieldX, Clock, User, Building2, Wallet, FileText, Landmark,
   History, CreditCard, AlertCircle, Eye, Download, UserCheck, Lock,
@@ -557,7 +558,7 @@ export function EmployeeDetailSheet({ employee, onClose }: Props) {
             <TabsContent value="bank" className="mt-0"><BankTab emp={employee} /></TabsContent>
             <TabsContent value="documents" className="mt-0"><DocumentsTab emp={employee} /></TabsContent>
             <TabsContent value="history" className="mt-0"><HistoryTab emp={employee} /></TabsContent>
-            <TabsContent value="transactions" className="mt-0"><TransactionsTab emp={employee} /></TabsContent>
+            <TabsContent value="transactions" className="mt-0"><TransactionTimeline transactions={transactions.filter(t => t.employeeId === employee.id)} /></TabsContent>
           </ScrollArea>
         </Tabs>
       </SheetContent>

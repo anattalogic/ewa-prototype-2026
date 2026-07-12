@@ -14,7 +14,8 @@ import {
   Grid3X3, Building2, Users, ArrowRightLeft, Repeat, ShieldCheck,
   BookOpen, Settings, Wallet, ShieldAlert, BarChart3, FileSpreadsheet,
   Bell, SlidersHorizontal, Workflow, Trash2, LayoutTemplate, AlertCircle,
-  Menu, X, ChevronLeft, ChevronRight, Languages, User, Lock, ChevronDown
+  Menu, X, ChevronLeft, ChevronRight, Languages, User, Lock, ChevronDown,
+  Zap, Landmark, Layers, Gauge
 } from "lucide-react";
 import { DashboardPage } from "@/pages/dashboard/DashboardPage";
 import { OnboardingPage } from "@/pages/onboarding/OnboardingPage";
@@ -34,6 +35,12 @@ import { WorkflowPage } from "@/pages/workflow/WorkflowPage";
 import { WriteOffPage } from "@/pages/writeoff/WriteOffPage";
 import { FormCreatorPage } from "@/pages/form-creator/FormCreatorPage";
 import { ErrorsPage } from "@/pages/errors/ErrorsPage";
+import { DisbursementPage } from "@/pages/disbursement/DisbursementPage";
+import { BankIntegrationPage } from "@/pages/bank-integration/BankIntegrationPage";
+import { ServiceCatalogPage } from "@/pages/service-catalog/ServiceCatalogPage";
+import { FeeHierarchyPage } from "@/pages/fee-hierarchy/FeeHierarchyPage";
+import { EmployeeGroupsPage } from "@/pages/employee-groups/EmployeeGroupsPage";
+import { LimitationsPage } from "@/pages/limitations/LimitationsPage";
 
 const ICON_MAP: Record<string, React.ElementType> = {
   "grid-3x3": Grid3X3, "building-2": Building2, "users": Users,
@@ -42,6 +49,8 @@ const ICON_MAP: Record<string, React.ElementType> = {
   "bar-chart-3": BarChart3, "file-spreadsheet": FileSpreadsheet, "bell": Bell,
   "sliders-horizontal": SlidersHorizontal, "workflow": Workflow, "trash-2": Trash2,
   "layout-template": LayoutTemplate, "alert-circle": AlertCircle,
+  "zap": Zap, "landmark": Landmark,   "layers": Layers,
+  "gauge": Gauge,
 };
 
 const MODULE_PAGES: Record<ModuleId, React.FC> = {
@@ -51,6 +60,9 @@ const MODULE_PAGES: Record<ModuleId, React.FC> = {
   "risk": RiskPage, "reports": ReportsPage, "payroll": PayrollPage,
   "notifications": NotificationsPage, "admin": AdminPage, "workflow": WorkflowPage,
   "writeoff": WriteOffPage, "form-creator": FormCreatorPage, "errors": ErrorsPage,
+  "disbursement": DisbursementPage, "bank-integration": BankIntegrationPage,
+  "service-catalog": ServiceCatalogPage, "fee-hierarchy": FeeHierarchyPage,
+  "employee-groups": EmployeeGroupsPage, "limitations": LimitationsPage,
 };
 
 const VIEW_COLORS: Record<ViewType, string> = {

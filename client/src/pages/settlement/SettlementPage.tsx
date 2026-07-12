@@ -18,6 +18,7 @@ import {
   ShieldAlert, Hash, Repeat, ArrowRightLeft
 } from "lucide-react";
 import { useView } from "@/contexts/ViewContext";
+import { MakerCheckerModal } from "@/components/MakerCheckerModal";
 
 // ─── STATUS COLORS ───────────────────────────────────────────────────────────
 
@@ -85,7 +86,7 @@ function WorkflowStepper({ status }: { status: string }) {
 
 // ─── SETTLEMENT DETAIL PANEL ─────────────────────────────────────────────────
 
-function SettlementDetail({ set }: { set: Settlement }) {
+function SettlementDetail({ set, onModalOpen }: { set: Settlement; onModalOpen: (role: "MAKER" | "CHECKER", mode: "APPROVE" | "REJECT") => void }) {
   const isMakerVerifier = true; // Mock: current user is the Maker
   const isCheckerVerifier = true; // Mock: current user is the Checker
 
@@ -282,20 +283,24 @@ function SettlementDetail({ set }: { set: Settlement }) {
       <div className="flex items-center gap-3 pt-2">
         {set.status === "SUBMITTED" && isMakerVerifier && (
           <>
-            <Button className="h-9 text-xs font-semibold bg-[#1e3a5f] hover:bg-[#1a3250] text-white">
+            <Button className="h-9 text-xs font-semibold bg-[#1e3a5f] hover:bg-[#1a3250] text-white"
+              onClick={() => onModalOpen("MAKER", "APPROVE")}>
               <CheckCircle2 className="w-3.5 h-3.5 mr-1.5" /> Verify as Maker
             </Button>
-            <Button variant="outline" className="h-9 text-xs font-medium border-red-200 text-red-600 hover:bg-red-50">
+            <Button variant="outline" className="h-9 text-xs font-medium border-red-200 text-red-600 hover:bg-red-50"
+              onClick={() => onModalOpen("MAKER", "REJECT")}>
               <XCircle className="w-3.5 h-3.5 mr-1.5" /> Reject
             </Button>
           </>
         )}
         {set.status === "MAKER_APPROVED" && isCheckerVerifier && (
           <>
-            <Button className="h-9 text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white">
+            <Button className="h-9 text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white"
+              onClick={() => onModalOpen("CHECKER", "APPROVE")}>
               <ShieldCheck className="w-3.5 h-3.5 mr-1.5" /> Approve as Checker
             </Button>
-            <Button variant="outline" className="h-9 text-xs font-medium border-red-200 text-red-600 hover:bg-red-50">
+            <Button variant="outline" className="h-9 text-xs font-medium border-red-200 text-red-600 hover:bg-red-50"
+              onClick={() => onModalOpen("CHECKER", "REJECT")}>
               <XCircle className="w-3.5 h-3.5 mr-1.5" /> Reject
             </Button>
           </>
@@ -322,6 +327,17 @@ function SettlementDetail({ set }: { set: Settlement }) {
 export function SettlementPage() {
   const { view } = useView();
   const [selectedSettlement, setSelectedSettlement] = useState<Settlement | null>(null);
+  const [modalState, setModalState] = useState<{
+    settlement: Settlement;
+    role: "MAKER" | "CHECKER";
+    mode: "APPROVE" | "REJECT";
+  } | null>(null);
+
+  const handleModalSubmit = (note: string, confirmed: boolean) => {
+    // In prototype: just close the modal
+    // In production: would call API to approve/reject with note
+    setModalState(null);
+  };
 
   return (
     <div className="space-y-4">
@@ -435,7 +451,7 @@ export function SettlementPage() {
         {/* DETAIL TAB */}
         <TabsContent value="detail" className="mt-4">
           {selectedSettlement ? (
-            <SettlementDetail set={selectedSettlement} />
+            <SettlementDetail set={selectedSettlement} onModalOpen={(role, mode) => setModalState({ settlement: selectedSettlement, role, mode })} />
           ) : (
             <div className="text-center py-16">
               <ShieldCheck className="w-10 h-10 text-slate-200 mx-auto mb-3" />
@@ -480,6 +496,17 @@ export function SettlementPage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Maker-Checker Modal */}
+      {modalState && (
+        <MakerCheckerModal
+          settlement={modalState.settlement}
+          role={modalState.role}
+          mode={modalState.mode}
+          onSubmit={handleModalSubmit}
+          onClose={() => setModalState(null)}
+        />
+      )}
     </div>
   );
 }
