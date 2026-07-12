@@ -1,39 +1,38 @@
+/**
+ * EWA 3.0 2026 — Enterprise UI Prototype
+ * Design: Neobrutalist Fintech | Primary: Deep Navy (#1e3a5f) | Accent: Teal (#0ea5e9)
+ * Command Center Layout | Role-Based View Switching | 18 Enterprise Modules
+ */
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
-
+import { ViewProvider } from "./contexts/ViewContext";
+import { PortalLayout } from "./layouts/PortalLayout";
 
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
+      <Route path={"/"} component={PortalLayout} />
+      <Route path={"/module/:module"} component={PortalLayout} />
       <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+      <ThemeProvider defaultTheme="light">
+        <ViewProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </ViewProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
