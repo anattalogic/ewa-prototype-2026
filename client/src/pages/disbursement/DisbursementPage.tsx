@@ -158,18 +158,17 @@ export function DisbursementPage() {
 
         {/* QUEUE TAB */}
         <TabsContent value="queue" className="mt-4">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Disbursement Queue</CardTitle>
-              <div className="flex items-center gap-2 mt-1">
+          <div className="bg-white border border-[#d1d9e0] rounded-[3px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
+            <div className="flex items-center justify-between p-3 pb-2">
+              <h3 className="text-[9px] font-bold text-[#5a6b7c] uppercase tracking-widest">Disbursement Queue</h3>
+              <div className="flex items-center gap-1">
                 {["ALL", "REQUESTED", "VALIDATING", "DISBURSING", "COMPLETED", "FAILED", "RETRYING", "TIMEOUT"].map(s => (
                   <button key={s} className={`px-2 py-0.5 text-[9px] font-bold rounded-sm border transition-colors ${filterStatus === s ? "bg-[#1e3a5f] text-white border-[#1e3a5f]" : "bg-white text-slate-500 border-slate-200 hover:bg-slate-50"}`} onClick={() => setFilterStatus(s)}>
                     {s}
                   </button>
                 ))}
               </div>
-            </CardHeader>
-            <CardContent className="p-0">
+            </div>
               <Table>
                 <TableHeader>
                   <TableRow className="bg-slate-50/50 border-b-slate-200">
@@ -238,8 +237,7 @@ export function DisbursementPage() {
                   })}
                 </TableBody>
               </Table>
-            </CardContent>
-          </Card>
+          </div>
         </TabsContent>
 
         {/* DETAIL TAB */}

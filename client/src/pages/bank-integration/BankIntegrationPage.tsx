@@ -86,39 +86,36 @@ export function BankIntegrationPage() {
         </TabsList>
 
         {/* PAY CHANNELS TAB */}
-        <TabsContent value="channels" className="mt-4">
-          <Card>
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Pay Channel Registry</CardTitle>
-                <Button size="sm" className="h-7 text-xs font-semibold bg-[#1e3a5f] hover:bg-[#1a3250] text-white">
-                  <Plus className="w-3.5 h-3.5 mr-1" /> Add Channel
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="p-0">
+        <TabsContent value="channels" className="mt-3">
+          <div className="bg-white border border-[#d1d9e0] rounded-[3px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
+            <div className="flex items-center justify-between p-3 pb-2">
+              <h3 className="text-[9px] font-bold text-[#5a6b7c] uppercase tracking-widest">Pay Channel Registry</h3>
+              <Button size="sm" className="h-7 text-[10px] font-semibold bg-[#1e3a5f] hover:bg-[#1a3250] text-white rounded-[3px]">
+                <Plus className="w-3.5 h-3.5 mr-1" /> Add Channel
+              </Button>
+            </div>
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-slate-50/50 border-b-slate-200">
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Channel</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Bank</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Type</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Account</TableHead>
+                  <TableRow className="bg-[#f5f8fb] border-b-[#d1d9e0]">
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Channel</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Bank</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Type</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Account</TableHead>
                     <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold text-right">Prefund Balance</TableHead>
                     <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold text-right">Min Prefund</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Service Fee</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Ledger</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Status</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Last Sync</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Actions</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Service Fee</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Ledger</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Status</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Last Sync</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {payChannels.map(ch => {
                     const lowBalance = ch.prefundBalance < ch.minPrefund;
                     return (
-                      <TableRow key={ch.id} className="hover:bg-slate-50/80 border-b-slate-100 transition-colors">
-                        <TableCell className="text-xs font-mono font-bold text-[#1e3a5f]">{ch.id}</TableCell>
+                      <TableRow key={ch.id} className="hover:bg-[#f5f8fb] border-b-[#e8ecf0] transition-colors">
+                        <TableCell className="text-[11px] font-mono font-bold text-[#1e3a5f]">{ch.id}</TableCell>
                         <TableCell className="text-xs font-medium text-slate-700">{ch.bankName}</TableCell>
                         <TableCell>
                           <span className="flex items-center gap-1 text-[10px]">
@@ -137,7 +134,7 @@ export function BankIntegrationPage() {
                         <TableCell className="text-xs font-mono text-amber-600">
                           {ch.serviceFeeType === "PERCENT" ? ch.serviceFee + "%" : formatMMK(ch.serviceFee)}
                         </TableCell>
-                        <TableCell className="text-[10px] font-mono text-slate-500">{ch.ledgerAccount}</TableCell>
+                        <TableCell className="text-[10px] font-mono text-[#90a4ae]">{ch.ledgerAccount}</TableCell>
                         <TableCell>
                           <Badge variant="outline" className={`text-[9px] font-bold uppercase ${
                             ch.status === "ACTIVE" ? "bg-emerald-50 text-emerald-600 border-emerald-200" :
@@ -157,8 +154,7 @@ export function BankIntegrationPage() {
                   })}
                 </TableBody>
               </Table>
-            </CardContent>
-          </Card>
+          </div>
         </TabsContent>
 
         {/* CHANNEL DETAIL TAB */}
@@ -289,14 +285,14 @@ export function BankIntegrationPage() {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-slate-50/50 border-b-slate-200">
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">ID</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Date</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Channel</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Type</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">ID</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Date</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Channel</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Type</TableHead>
                     <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold text-right">Amount</TableHead>
                     <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold text-right">Balance</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Journal</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Description</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Journal</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Description</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -341,12 +337,12 @@ export function BankIntegrationPage() {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-slate-50/50 border-b-slate-200">
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Channel</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Channel</TableHead>
                     <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold text-right">System Balance</TableHead>
                     <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold text-right">Bank Statement</TableHead>
                     <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold text-right">Difference</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Status</TableHead>
-                    <TableHead className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Last Reconciled</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Status</TableHead>
+                    <TableHead className="text-[8px] uppercase tracking-wider text-[#5a6b7c] font-bold">Last Reconciled</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

@@ -41,48 +41,48 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   /* EWA Enterprise Brand Colors */
-  --color-ewa-navy: oklch(0.25 0.05 250);
-  --color-ewa-teal: oklch(0.6 0.14 210);
-  --color-ewa-amber: oklch(0.75 0.12 75);
-  --color-ewa-red: oklch(0.55 0.18 25);
-  --color-ewa-emerald: oklch(0.6 0.15 155);
+  --color-ewa-navy: oklch(0.2 0.05 250);
+  --color-ewa-teal: oklch(0.55 0.12 210);
+  --color-ewa-amber: oklch(0.72 0.12 75);
+  --color-ewa-red: oklch(0.5 0.16 25);
+  --color-ewa-emerald: oklch(0.55 0.14 155);
 }
 
 :root {
-  --radius: 0.375rem;
-  /* Enterprise Fintech — Authoritative Navy + Refined Teal */
-  --background: oklch(0.975 0.003 250);
-  --foreground: oklch(0.18 0.025 250);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.025 250);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.025 250);
-  --primary: oklch(0.25 0.05 250);
+  --radius: 0.25rem;
+  /* SAP Fiori-Inspired Enterprise Fintech — Professional, Structured, Authoritative */
+  --background: oklch(0.965 0.005 250);
+  --foreground: oklch(0.15 0.02 250);
+  --card: oklch(0.995 0 0);
+  --card-foreground: oklch(0.15 0.02 250);
+  --popover: oklch(0.995 0 0);
+  --popover-foreground: oklch(0.15 0.02 250);
+  --primary: oklch(0.2 0.05 250);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.955 0.003 250);
-  --secondary-foreground: oklch(0.25 0.05 250);
-  --muted: oklch(0.94 0.005 250);
-  --muted-foreground: oklch(0.45 0.015 250);
-  --accent: oklch(0.955 0.015 210);
-  --accent-foreground: oklch(0.25 0.05 250);
-  --destructive: oklch(0.55 0.18 25);
+  --secondary: oklch(0.95 0.005 250);
+  --secondary-foreground: oklch(0.2 0.05 250);
+  --muted: oklch(0.93 0.005 250);
+  --muted-foreground: oklch(0.4 0.015 250);
+  --accent: oklch(0.94 0.01 210);
+  --accent-foreground: oklch(0.2 0.05 250);
+  --destructive: oklch(0.5 0.16 25);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.88 0.008 250);
-  --input: oklch(0.88 0.008 250);
-  --ring: oklch(0.6 0.14 210);
-  --chart-1: oklch(0.25 0.05 250);
-  --chart-2: oklch(0.6 0.14 210);
-  --chart-3: oklch(0.6 0.15 155);
-  --chart-4: oklch(0.7 0.12 75);
-  --chart-5: oklch(0.55 0.18 25);
-  --sidebar: oklch(0.975 0.003 250);
-  --sidebar-foreground: oklch(0.18 0.025 250);
-  --sidebar-primary: oklch(0.6 0.14 210);
+  --border: oklch(0.87 0.008 250);
+  --input: oklch(0.87 0.008 250);
+  --ring: oklch(0.55 0.12 210);
+  --chart-1: oklch(0.2 0.05 250);
+  --chart-2: oklch(0.55 0.12 210);
+  --chart-3: oklch(0.55 0.14 155);
+  --chart-4: oklch(0.72 0.12 75);
+  --chart-5: oklch(0.5 0.16 25);
+  --sidebar: oklch(0.965 0.005 250);
+  --sidebar-foreground: oklch(0.15 0.02 250);
+  --sidebar-primary: oklch(0.55 0.12 210);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.955 0.015 210);
-  --sidebar-accent-foreground: oklch(0.25 0.05 250);
-  --sidebar-border: oklch(0.88 0.008 250);
-  --sidebar-ring: oklch(0.6 0.14 210);
+  --sidebar-accent: oklch(0.94 0.01 210);
+  --sidebar-accent-foreground: oklch(0.2 0.05 250);
+  --sidebar-border: oklch(0.87 0.008 250);
+  --sidebar-ring: oklch(0.55 0.12 210);
 }
 
 @layer base {
@@ -91,7 +91,7 @@
   }
   body {
     @apply bg-background text-foreground font-sans;
-    font-feature-settings: "tnum" on, "lnum" on;
+    font-feature-settings: "tnum" on, "lnum" on, "cv01" on;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -111,8 +111,8 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .flex {
@@ -120,56 +120,175 @@
     min-width: 0;
   }
 
-  @media (min-width: 640px) {
-    .container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
-
   @media (min-width: 1024px) {
     .container {
       padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px;
+      max-width: 1440px;
     }
   }
 }
 
-/* Enterprise Table Base Styles */
+/* ===== SAP FIORI-INSPIRED ENTERPRISE COMPONENTS ===== */
+
+/* Enterprise Table — structured, column-aligned, SAP ALV style */
 .table-enterprise {
   @apply w-full text-[11px] border-collapse;
 }
 .table-enterprise thead th {
-  @apply text-left py-2 px-3 font-bold text-slate-400 uppercase tracking-wider border-b-2 border-slate-200 bg-slate-50/80 sticky top-0 z-10;
+  @apply text-left py-2 px-3 font-bold text-[#5a6b7c] uppercase tracking-wider border-b border-[#d1d9e0] bg-[#f0f4f7] sticky top-0 z-10 whitespace-nowrap;
 }
 .table-enterprise tbody td {
-  @apply py-2 px-3 border-b border-slate-100;
+  @apply py-2.5 px-3 border-b border-[#e8ecf0];
 }
 .table-enterprise tbody tr {
-  @apply hover:bg-slate-50/60 transition-colors;
+  @apply hover:bg-[#f5f8fb] transition-colors;
 }
 .table-enterprise tbody tr.selected {
-  @apply bg-blue-50/80;
+  @apply bg-[#e8f0fe];
 }
 
-/* Enterprise Card */
+/* Enterprise Card — sharp corners, minimal shadow, structured border */
 .card-enterprise {
-  @apply bg-white border border-slate-200 rounded-sm shadow-[0_1px_2px_rgba(0,0,0,0.04)];
+  @apply bg-white border border-[#d1d9e0] rounded-[3px] shadow-[0_1px_3px_rgba(0,0,0,0.06)];
 }
 
-/* Enterprise KPI Card */
+/* Enterprise KPI Card — prominent number, clear label, subtle top border */
 .kpi-card {
-  @apply bg-white border border-slate-200 rounded-sm p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)];
+  @apply bg-white border border-[#d1d9e0] rounded-[3px] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.06)];
   border-top-width: 3px;
 }
 
-/* Tab Panel Enterprise */
+/* Tab Panel Enterprise — clean, structured */
 .tab-panel-enterprise {
-  @apply bg-white border border-slate-200 rounded-sm p-5 shadow-[0_1px_2px_rgba(0,0,0,0.04)];
+  @apply bg-white border border-[#d1d9e0] rounded-[3px] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.06)];
 }
 
-/* Bulk Action Bar */
+/* Bulk Action Bar — SAP Fiori toolbar style */
 .bulk-action-bar {
-  @apply fixed bottom-0 left-0 right-0 bg-[#1e3a5f] text-white px-5 py-3 z-50 shadow-lg border-t-2 border-[#0ea5e9] flex items-center justify-between;
+  @apply fixed bottom-0 left-0 right-0 bg-[#1e3a5f] text-white px-5 py-3 z-50 shadow-[0_-2px_8px_rgba(0,0,0,0.15)] border-t-2 border-[#0ea5e9] flex items-center justify-between;
+}
+
+/* Enterprise Toolbar — action bar pattern */
+.enterprise-toolbar {
+  @apply flex items-center justify-between bg-white border border-[#d1d9e0] rounded-[3px] px-4 py-2.5 shadow-[0_1px_3px_rgba(0,0,0,0.06)];
+}
+
+/* Enterprise Status Badge — semantic colors, SAP Fiori style */
+.status-badge-success {
+  @apply inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-[2px] bg-[#e8f5e9] text-[#2e7d32] border border-[#c8e6c9];
+}
+.status-badge-warning {
+  @apply inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-[2px] bg-[#fff3e0] text-[#e65100] border border-[#ffe0b2];
+}
+.status-badge-error {
+  @apply inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-[2px] bg-[#fce4ec] text-[#c62828] border border-[#ffcdd2];
+}
+.status-badge-info {
+  @apply inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-[2px] bg-[#e3f2fd] text-[#1565c0] border border-[#bbdefb];
+}
+.status-badge-neutral {
+  @apply inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-[2px] bg-[#f5f5f5] text-[#616161] border border-[#e0e0e0];
+}
+
+/* Enterprise Button variants */
+.btn-enterprise-primary {
+  @apply inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#1e3a5f] text-white text-[11px] font-semibold rounded-[3px] border border-[#152a40] shadow-sm hover:bg-[#152a40] transition-colors;
+}
+.btn-enterprise-secondary {
+  @apply inline-flex items-center gap-1.5 px-4 py-1.5 bg-white text-[#1e3a5f] text-[11px] font-semibold rounded-[3px] border border-[#d1d9e0] shadow-sm hover:bg-[#f5f8fb] transition-colors;
+}
+.btn-enterprise-danger {
+  @apply inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#c62828] text-white text-[11px] font-semibold rounded-[3px] border border-[#a31e1e] shadow-sm hover:bg-[#a31e1e] transition-colors;
+}
+
+/* Enterprise Message Strip — SAP Fiori style */
+.message-strip-info {
+  @apply flex items-center gap-2 px-4 py-2.5 bg-[#e3f2fd] border-l-4 border-[#1565c0] text-[11px] text-[#0d47a1] rounded-r-[3px];
+}
+.message-strip-warning {
+  @apply flex items-center gap-2 px-4 py-2.5 bg-[#fff8e1] border-l-4 border-[#f9a825] text-[11px] text-[#e65100] rounded-r-[3px];
+}
+.message-strip-error {
+  @apply flex items-center gap-2 px-4 py-2.5 bg-[#fce4ec] border-l-4 border-[#c62828] text-[11px] text-[#b71c1c] rounded-r-[3px];
+}
+.message-strip-success {
+  @apply flex items-center gap-2 px-4 py-2.5 bg-[#e8f5e9] border-l-4 border-[#2e7d32] text-[11px] text-[#1b5e20] rounded-r-[3px];
+}
+
+/* Enterprise Progress Stepper */
+.step-indicator {
+  @apply flex items-center gap-0;
+}
+.step-node {
+  @apply flex items-center justify-center w-6 h-6 rounded-full text-[9px] font-bold border;
+}
+.step-node-active {
+  @apply bg-[#0ea5e9] text-white border-[#0ea5e9];
+}
+.step-node-completed {
+  @apply bg-[#2e7d32] text-white border-[#2e7d32];
+}
+.step-node-pending {
+  @apply bg-white text-[#90a4ae] border-[#cfd8dc];
+}
+.step-connector {
+  @apply w-8 h-0.5;
+}
+.step-connector-active {
+  @apply bg-[#0ea5e9];
+}
+.step-connector-pending {
+  @apply bg-[#cfd8dc];
+}
+
+/* Enterprise Input Fields */
+.input-enterprise {
+  @apply w-full px-3 py-1.5 text-[11px] border border-[#d1d9e0] rounded-[3px] bg-white focus:border-[#0ea5e9] focus:ring-1 focus:ring-[#0ea5e9]/20 outline-none transition-colors;
+}
+
+/* Enterprise Select */
+.select-enterprise {
+  @apply px-3 py-1.5 text-[11px] border border-[#d1d9e0] rounded-[3px] bg-white focus:border-[#0ea5e9] outline-none;
+}
+
+/* Enterprise Modal Overlay */
+.modal-enterprise {
+  @apply fixed inset-0 bg-black/40 z-[100] flex items-center justify-center;
+}
+.modal-enterprise-content {
+  @apply bg-white rounded-[4px] shadow-[0_8px_32px_rgba(0,0,0,0.15)] border border-[#d1d9e0] max-w-[600px] w-full max-h-[85vh] overflow-hidden;
+}
+.modal-enterprise-header {
+  @apply flex items-center justify-between px-5 py-3 border-b border-[#d1d9e0] bg-[#f8fafc];
+}
+.modal-enterprise-body {
+  @apply p-5 overflow-y-auto;
+}
+.modal-enterprise-footer {
+  @apply flex items-center justify-end gap-2 px-5 py-3 border-t border-[#d1d9e0] bg-[#f8fafc];
+}
+
+/* Enterprise Pagination */
+.pagination-enterprise {
+  @apply flex items-center gap-1 justify-end py-2 px-3;
+}
+.pagination-enterprise button {
+  @apply px-2 py-1 text-[10px] font-semibold border border-[#d1d9e0] rounded-[2px] bg-white text-[#5a6b7c] hover:bg-[#f5f8fb] transition-colors;
+}
+.pagination-enterprise button.active {
+  @apply bg-[#1e3a5f] text-white border-[#1e3a5f];
+}
+.pagination-enterprise button:disabled {
+  @apply opacity-40 cursor-not-allowed;
+}
+
+/* Enterprise Checkbox */
+.checkbox-enterprise {
+  @apply w-4 h-4 rounded-[2px] border border-[#d1d9e0] accent-[#0ea5e9];
+}
+
+/* Enterprise Divider */
+.divider-enterprise {
+  @apply h-px bg-[#d1d9e0] my-3;
 }
