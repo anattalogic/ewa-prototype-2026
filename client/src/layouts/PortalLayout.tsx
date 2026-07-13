@@ -15,6 +15,8 @@ import {
   Zap, Landmark, Layers, Gauge, LogOut, UserCheck, Briefcase,
   Coins, Scale, FileText, PieChart, Percent, UsersRound, Sliders
 } from "lucide-react";
+import { generateProjectZip } from "@/utils/projectZip";
+import { Package } from "lucide-react";
 import { DashboardPage } from "@/pages/dashboard/DashboardPage";
 import { OnboardingPage } from "@/pages/onboarding/OnboardingPage";
 import { EmployeesPage } from "@/pages/employees/EmployeesPage";
@@ -130,6 +132,26 @@ export function PortalLayout() {
   };
 
   const [viewDropdownOpen, setViewDropdownOpen] = useState(false);
+  const [zipDownloading, setZipDownloading] = useState(false);
+
+  const handleDownloadZip = async () => {
+    setZipDownloading(true);
+    try {
+      const blob = await generateProjectZip();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "ewa-prototype-2026.zip";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("ZIP download failed:", err);
+    } finally {
+      setZipDownloading(false);
+    }
+  };
 
   return (
     <div className="flex h-screen bg-[#f0f4f7] overflow-hidden font-sans">
@@ -253,6 +275,19 @@ export function PortalLayout() {
                 </div>
               )}
             </div>
+
+            <div className="w-px h-5 bg-[#d1d9e0]" />
+
+            {/* ZIP Download Button */}
+            <button
+              onClick={handleDownloadZip}
+              disabled={zipDownloading}
+              className="flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-semibold text-white bg-[#0ea5e9] hover:bg-[#0284c7] disabled:opacity-50 rounded-[3px] transition-colors uppercase tracking-wider shadow-sm"
+              title="Download all project files as ZIP"
+            >
+              <Package className="w-3 h-3" />
+              {zipDownloading ? "..." : "ZIP"}
+            </button>
 
             <div className="w-px h-5 bg-[#d1d9e0]" />
 
