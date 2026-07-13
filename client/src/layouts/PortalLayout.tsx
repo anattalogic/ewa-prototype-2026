@@ -41,6 +41,7 @@ import { ServiceCatalogPage } from "@/pages/service-catalog/ServiceCatalogPage";
 import { FeeHierarchyPage } from "@/pages/fee-hierarchy/FeeHierarchyPage";
 import { EmployeeGroupsPage } from "@/pages/employee-groups/EmployeeGroupsPage";
 import { LimitationsPage } from "@/pages/limitations/LimitationsPage";
+import { DocumentationPage } from "@/pages/documentation/DocumentationPage";
 
 const ICON_MAP: Record<string, React.ElementType> = {
   "grid-3x3": Grid3X3, "building-2": Building2, "users": Users,
@@ -64,7 +65,7 @@ const MODULE_PAGES: Record<ModuleId, React.FC> = {
   "writeoff": WriteOffPage, "form-creator": FormCreatorPage, "errors": ErrorsPage,
   "disbursement": DisbursementPage, "bank-integration": BankIntegrationPage,
   "service-catalog": ServiceCatalogPage, "fee-hierarchy": FeeHierarchyPage,
-  "employee-groups": EmployeeGroupsPage, "limitations": LimitationsPage,
+  "employee-groups": EmployeeGroupsPage, "limitations": LimitationsPage, "documentation": DocumentationPage,
 };
 
 const VIEW_COLORS: Record<ViewType, string> = {
@@ -111,7 +112,7 @@ const NAV_GROUPS = [
   },
   {
     label: "System",
-    modules: ["notifications", "admin"],
+    modules: ["notifications", "documentation", "admin"],
   },
 ];
 

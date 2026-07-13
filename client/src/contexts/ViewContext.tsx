@@ -31,7 +31,8 @@ export type ModuleId =
   | "service-catalog"
   | "fee-hierarchy"
   | "employee-groups"
-  | "limitations";
+  | "limitations"
+  | "documentation";
 
 interface ModuleConfig {
   id: ModuleId;
@@ -65,6 +66,7 @@ export const MODULE_REGISTRY: ModuleConfig[] = [
   { id: "fee-hierarchy", label: "Fee Hierarchy Engine", icon: "pyramid", views: ["Platform Admin", "Finance"] },
   { id: "employee-groups", label: "Employee Groups", icon: "users", views: ["HR", "Operations", "Platform Admin"] },
   { id: "limitations", label: "Transaction Limits", icon: "gauge", views: ["Platform Admin", "Risk", "Operations"] },
+  { id: "documentation", label: "Documentation", icon: "book-open", views: ["HR", "Sales", "Operations", "Back Office", "Finance", "Risk", "Platform Admin"] },
 ];
 
 interface ViewContextType {
