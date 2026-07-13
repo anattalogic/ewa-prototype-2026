@@ -42,7 +42,7 @@ interface ModuleConfig {
 
 export const MODULE_REGISTRY: ModuleConfig[] = [
   { id: "dashboard", label: "Dashboard", icon: "grid-3x3", views: ["HR", "Sales", "Operations", "Back Office", "Finance", "Risk", "Platform Admin"] },
-  { id: "onboarding", label: "Company Onboarding", icon: "building-2", views: ["Operations", "Platform Admin"] },
+  { id: "onboarding", label: "Employee Onboarding", icon: "user-check", views: ["HR", "Operations", "Platform Admin"] },
   { id: "employees", label: "Employee Management", icon: "users", views: ["HR", "Operations", "Back Office", "Finance", "Risk", "Platform Admin"] },
   { id: "transactions", label: "Transaction Monitor", icon: "arrow-right-left", views: ["HR", "Operations", "Back Office", "Finance", "Risk", "Platform Admin"] },
   { id: "repayment", label: "Repayment & Settlement", icon: "repeat", views: ["HR", "Sales", "Operations", "Back Office", "Finance"] },
@@ -55,7 +55,7 @@ export const MODULE_REGISTRY: ModuleConfig[] = [
   { id: "payroll", label: "Payroll & Deduction", icon: "file-spreadsheet", views: ["HR", "Back Office", "Finance"] },
   { id: "notifications", label: "Notification Center", icon: "bell", views: ["HR", "Operations", "Back Office", "Finance", "Platform Admin"] },
   { id: "admin", label: "Admin & Configuration", icon: "sliders-horizontal", views: ["Platform Admin"] },
-  { id: "workflow", label: "Enterprise Workflow", icon: "workflow", views: ["Finance", "Operations", "Risk", "Platform Admin"] },
+  { id: "workflow", label: "Workflow & Case Mgmt", icon: "workflow", views: ["HR", "Finance", "Operations", "Risk", "Platform Admin"] },
   { id: "writeoff", label: "Write-Off Management", icon: "trash-2", views: ["Finance", "Risk"] },
   { id: "form-creator", label: "Form Creator", icon: "layout-template", views: ["Platform Admin"] },
   { id: "errors", label: "Error Messages", icon: "alert-circle", views: ["Platform Admin"] },

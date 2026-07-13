@@ -357,3 +357,166 @@ export const formatMMK = (amount: number): string => {
 export const formatCurrency = (amount: number): string => {
   return amount.toLocaleString("en-US");
 };
+// ─── WORKFLOW & ONBOARDING TYPES ─────────────────────────────────────────────
+
+export type WorkflowCaseType = "employee_import" | "employee_verification" | "budget_request" | "company_onboarding" | "settlement" | "writeoff";
+export type WorkflowStatus = "Draft" | "Submitted" | "Checking" | "HR_Review" | "Risk_Review" | "Finance_Review" | "Approved" | "Completed" | "Rejected" | "Cancelled" | "Escalated" | "Returned" | "Maker_Submitted" | "Checker_Approved" | "Checker_Rejected";
+
+export interface WorkflowCase {
+  id: string;
+  type: WorkflowCaseType;
+  title: string;
+  subject: string;
+  status: WorkflowStatus;
+  currentStep: string;
+  currentOwner: string;
+  ownerRole: string;
+  priority: "Low" | "Medium" | "High" | "Critical";
+  createdAt: string;
+  updatedAt: string;
+  slaDueAt: string;
+  slaRemaining: string;
+  escalationLevel: number;
+  relatedId?: string;
+}
+
+export interface WorkItem {
+  id: string;
+  caseId: string;
+  caseTitle: string;
+  caseType: WorkflowCaseType;
+  stepName: string;
+  ownerType: "user" | "role" | "queue";
+  ownerId: string;
+  ownerName: string;
+  ownerRole: string;
+  status: "Pending" | "Assigned" | "InProgress" | "Completed" | "Escalated" | "Overdue";
+  priority: "Low" | "Medium" | "High" | "Critical";
+  slaDueAt: string;
+  escalationLevel: number;
+  claimable: boolean;
+}
+
+export interface WorkflowActivity {
+  id: string;
+  caseId: string;
+  type: "created" | "submitted" | "approved" | "rejected" | "returned" | "escalated" | "assigned" | "claimed" | "completed" | "document_uploaded" | "comment";
+  actor: string;
+  actorRole: string;
+  action: string;
+  timestamp: string;
+  details?: string;
+  fromState?: string;
+  toState?: string;
+}
+
+export interface ImportBatch {
+  id: string;
+  fileName: string;
+  uploadedBy: string;
+  uploadedAt: string;
+  totalRows: number;
+  status: "Parsing" | "Column_Mapping" | "Preview" | "Validation" | "Maker_Submitted" | "Checker_Approved" | "Checker_Rejected" | "Completed" | "Failed";
+  newCount: number;
+  modifiedCount: number;
+  missingCount: number;
+  unchangedCount: number;
+  correctCount: number;
+  incorrectCount: number;
+  columnMapping: { fileColumn: string; systemField: string; required: boolean }[];
+  checkerId?: string;
+  checkerName?: string;
+  checkedAt?: string;
+  rejectReason?: string;
+}
+
+export interface ImportRow {
+  id: number;
+  category: "new" | "modified" | "missing" | "unchanged";
+  validation: "correct" | "incorrect" | "warning";
+  data: Record<string, string>;
+  errors: string[];
+  warnings: string[];
+}
+
+export interface EmployeeImportTask {
+  id: string;
+  employeeId: string;
+  employeeName: string;
+  employeeCode: string;
+  companyId: string;
+  companyName: string;
+  type: "add" | "update";
+  status: "Pending" | "Approved" | "Rejected";
+  submittedAt: string;
+  reviewedAt?: string;
+  reviewer?: string;
+  budgetOverflow?: boolean;
+  budgetRequest?: string;
+}
+
+// ─── WORKFLOW MOCK DATA ──────────────────────────────────────────────────────
+
+export const workflowCases: WorkflowCase[] = [
+  { id: "EWF-001", type: "employee_import", title: "Bulk Employee Import — Golden Harvest Trading", subject: "45 employees uploaded", status: "Checking", currentStep: "Column Mapping", currentOwner: "Admin HR", ownerRole: "HR", priority: "Medium", createdAt: "2026-07-12 09:00", updatedAt: "2026-07-12 10:15", slaDueAt: "2026-07-14 09:00", slaRemaining: "1d 22h", escalationLevel: 0, relatedId: "IMP-2026-001" },
+  { id: "EWF-002", type: "budget_request", title: "Budget Overflow — Myanmar Tech Solutions", subject: "EMP-008 EWA cap overflow 500,000 MMK", status: "HR_Review", currentStep: "HR Review", currentOwner: "Finance Officer", ownerRole: "Finance", priority: "High", createdAt: "2026-07-11 14:00", updatedAt: "2026-07-12 08:30", slaDueAt: "2026-07-12 14:00", slaRemaining: "0h 30m", escalationLevel: 1, relatedId: "BR-2026-001" },
+  { id: "EWF-003", type: "employee_verification", title: "Employee Verification — Zaw Win Htet", subject: "GH-003 — Pending Verification", status: "Checking", currentStep: "Employment Verification", currentOwner: "HR Admin", ownerRole: "HR", priority: "Medium", createdAt: "2026-07-10 11:00", updatedAt: "2026-07-11 09:00", slaDueAt: "2026-07-13 11:00", slaRemaining: "1d 1h", escalationLevel: 0, relatedId: "emp-008" },
+  { id: "EWF-004", type: "budget_request", title: "Budget Increase — Skyline Trading", subject: "Department overflow 1,200,000 MMK", status: "Risk_Review", currentStep: "Risk Assessment", currentOwner: "Risk Manager", ownerRole: "Risk", priority: "High", createdAt: "2026-07-09 16:00", updatedAt: "2026-07-10 14:00", slaDueAt: "2026-07-12 16:00", slaRemaining: "1d 6h", escalationLevel: 0, relatedId: "BR-2026-002" },
+  { id: "EWF-005", type: "company_onboarding", title: "Company Onboarding — Delta Manufacturing", subject: "KYC Review stage", status: "Submitted", currentStep: "KYC Document Review", currentOwner: "Ops Lead", ownerRole: "Operations", priority: "Medium", createdAt: "2026-07-10 08:00", updatedAt: "2026-07-10 10:00", slaDueAt: "2026-07-13 08:00", slaRemaining: "1d 22h", escalationLevel: 0, relatedId: "OB-006" },
+  { id: "EWF-006", type: "employee_import", title: "Bulk Employee Import — Fresh Mart Groceries", subject: "12 employees uploaded", status: "Maker_Submitted", currentStep: "Checker Review", currentOwner: "Ops Lead", ownerRole: "Operations", priority: "Medium", createdAt: "2026-07-11 15:00", updatedAt: "2026-07-12 09:00", slaDueAt: "2026-07-13 15:00", slaRemaining: "1d 5h", escalationLevel: 0, relatedId: "IMP-2026-002" },
+  { id: "EWF-007", type: "budget_request", title: "Budget Adjustment — Golden Harvest", subject: "Reallocate 2,000,000 MMK from dormant dept", status: "Finance_Review", currentStep: "Finance Final Review", currentOwner: "CFO", ownerRole: "Finance", priority: "Critical", createdAt: "2026-07-08 09:00", updatedAt: "2026-07-10 16:00", slaDueAt: "2026-07-11 09:00", slaRemaining: "—", escalationLevel: 2, relatedId: "BR-2026-003" },
+  { id: "EWF-008", type: "employee_verification", title: "Employee Verification — Phyo Pyae", subject: "FM-003 — KYC Pending", status: "Checking", currentStep: "KYC Document Verification", currentOwner: "HR Admin", ownerRole: "HR", priority: "Low", createdAt: "2026-07-11 10:00", updatedAt: "2026-07-11 10:00", slaDueAt: "2026-07-14 10:00", slaRemaining: "2d", escalationLevel: 0, relatedId: "emp-016" },
+  { id: "EWF-009", type: "settlement", title: "Settlement Verification — Skyline Trading", subject: "SET-001 — 126,000 MMK", status: "Submitted", currentStep: "Maker Verification", currentOwner: "Ops Lead", ownerRole: "Operations", priority: "High", createdAt: "2026-07-11 08:30", updatedAt: "2026-07-11 08:30", slaDueAt: "2026-07-12 08:30", slaRemaining: "10h", escalationLevel: 0, relatedId: "SET-001" },
+  { id: "EWF-010", type: "budget_request", title: "Auto Budget Request — Skyline Trading", subject: "EMP-009 EWA cap overflow from onboarding", status: "Submitted", currentStep: "Waiting HR Review", currentOwner: "Finance Officer", ownerRole: "Finance", priority: "Medium", createdAt: "2026-07-12 11:00", updatedAt: "2026-07-12 11:00", slaDueAt: "2026-07-14 11:00", slaRemaining: "2d", escalationLevel: 0, relatedId: "BR-2026-004" },
+];
+
+export const workItems: WorkItem[] = [
+  { id: "WI-001", caseId: "EWF-002", caseTitle: "Budget Overflow — Myanmar Tech Solutions", caseType: "budget_request", stepName: "HR Review", ownerType: "role", ownerId: "hr", ownerName: "HR Admin", ownerRole: "HR", status: "Pending", priority: "High", slaDueAt: "2026-07-12 14:00", escalationLevel: 1, claimable: true },
+  { id: "WI-002", caseId: "EWF-006", caseTitle: "Bulk Employee Import — Fresh Mart Groceries", caseType: "employee_import", stepName: "Checker Review", ownerType: "user", ownerId: "ops", ownerName: "Ops Lead", ownerRole: "Operations", status: "Assigned", priority: "Medium", slaDueAt: "2026-07-13 15:00", escalationLevel: 0, claimable: true },
+  { id: "WI-003", caseId: "EWF-009", caseTitle: "Settlement Verification — Skyline Trading", caseType: "settlement", stepName: "Maker Verification", ownerType: "user", ownerId: "ops", ownerName: "Ops Lead", ownerRole: "Operations", status: "Assigned", priority: "High", slaDueAt: "2026-07-12 08:30", escalationLevel: 0, claimable: true },
+  { id: "WI-004", caseId: "EWF-004", caseTitle: "Budget Increase — Skyline Trading", caseType: "budget_request", stepName: "Risk Assessment", ownerType: "role", ownerId: "risk", ownerName: "Risk Manager", ownerRole: "Risk", status: "Pending", priority: "High", slaDueAt: "2026-07-12 16:00", escalationLevel: 0, claimable: true },
+  { id: "WI-005", caseId: "EWF-007", caseTitle: "Budget Adjustment — Golden Harvest", caseType: "budget_request", stepName: "Finance Final Review", ownerType: "user", ownerId: "fin", ownerName: "CFO", ownerRole: "Finance", status: "Overdue", priority: "Critical", slaDueAt: "2026-07-11 09:00", escalationLevel: 2, claimable: true },
+  { id: "WI-006", caseId: "EWF-001", caseTitle: "Bulk Employee Import — Golden Harvest Trading", caseType: "employee_import", stepName: "Column Mapping", ownerType: "user", ownerId: "hr", ownerName: "Admin HR", ownerRole: "HR", status: "InProgress", priority: "Medium", slaDueAt: "2026-07-14 09:00", escalationLevel: 0, claimable: true },
+  { id: "WI-007", caseId: "EWF-003", caseTitle: "Employee Verification — Zaw Win Htet", caseType: "employee_verification", stepName: "Employment Verification", ownerType: "user", ownerId: "hr", ownerName: "HR Admin", ownerRole: "HR", status: "Completed", priority: "Medium", slaDueAt: "2026-07-13 11:00", escalationLevel: 0, claimable: false },
+  { id: "WI-008", caseId: "EWF-005", caseTitle: "Company Onboarding — Delta Manufacturing", caseType: "company_onboarding", stepName: "KYC Document Review", ownerType: "user", ownerId: "ops", ownerName: "Ops Lead", ownerRole: "Operations", status: "InProgress", priority: "Medium", slaDueAt: "2026-07-13 08:00", escalationLevel: 0, claimable: true },
+  { id: "WI-009", caseId: "EWF-008", caseTitle: "Employee Verification — Phyo Pyae", caseType: "employee_verification", stepName: "KYC Document Verification", ownerType: "user", ownerId: "hr", ownerName: "HR Admin", ownerRole: "HR", status: "Pending", priority: "Low", slaDueAt: "2026-07-14 10:00", escalationLevel: 0, claimable: true },
+  { id: "WI-010", caseId: "EWF-010", caseTitle: "Auto Budget Request — Skyline Trading", caseType: "budget_request", stepName: "Waiting HR Review", ownerType: "role", ownerId: "fin", ownerName: "Finance Officer", ownerRole: "Finance", status: "Pending", priority: "Medium", slaDueAt: "2026-07-14 11:00", escalationLevel: 0, claimable: true },
+];
+
+export const workflowActivities: WorkflowActivity[] = [
+  // EWF-001: Bulk Import
+  { id: "WA-001", caseId: "EWF-001", type: "created", actor: "Admin HR", actorRole: "HR", action: "Employee import file uploaded", timestamp: "2026-07-12 09:00", details: "File: golden_harvest_batch_2026-07-12.xlsx (45 rows)" },
+  { id: "WA-002", caseId: "EWF-001", type: "submitted", actor: "Admin HR", actorRole: "HR", action: "Submitted for parsing", timestamp: "2026-07-12 09:05", details: "45 rows submitted" },
+  { id: "WA-003", caseId: "EWF-001", type: "completed", actor: "System", actorRole: "System", action: "Column auto-mapping completed", timestamp: "2026-07-12 09:10", details: "8 columns mapped automatically", fromState: "Parsing", toState: "Column_Mapping" },
+  { id: "WA-004", caseId: "EWF-001", type: "claimed", actor: "Admin HR", actorRole: "HR", action: "Claimed column mapping review", timestamp: "2026-07-12 10:15", details: "Reviewing auto-mapped columns" },
+  // EWF-002: Budget Overflow
+  { id: "WA-005", caseId: "EWF-002", type: "created", actor: "System", actorRole: "System", action: "Budget overflow auto-request created", timestamp: "2026-07-11 14:00", details: "EMP-008 EWA cap 292,500 MMK exceeds department remaining 200,000 MMK" },
+  { id: "WA-006", caseId: "EWF-002", type: "submitted", actor: "System", actorRole: "System", action: "Submitted for HR Review", timestamp: "2026-07-11 14:01", details: "Auto-submitted per threshold routing" },
+  { id: "WA-007", caseId: "EWF-002", type: "escalated", actor: "System", actorRole: "System", action: "SLA breach — escalated to HR Manager", timestamp: "2026-07-12 08:00", details: "48h SLA exceeded", fromState: "Submitted", toState: "HR_Review" },
+  // EWF-003: Employee Verification
+  { id: "WA-008", caseId: "EWF-003", type: "created", actor: "HR Admin", actorRole: "HR", action: "Employee verification initiated", timestamp: "2026-07-10 11:00", details: "Zaw Win Htet (GH-003) — new hire verification" },
+  { id: "WA-009", caseId: "EWF-003", type: "approved", actor: "HR Admin", actorRole: "HR", action: "Employment verification approved", timestamp: "2026-07-11 09:00", details: "Payroll record matched, join date valid", fromState: "Checking", toState: "Checking" },
+  // EWF-004: Budget Increase
+  { id: "WA-010", caseId: "EWF-004", type: "created", actor: "Finance Officer", actorRole: "Finance", action: "Budget increase request submitted", timestamp: "2026-07-09 16:00", details: "Skyline Trading department overflow 1,200,000 MMK" },
+  { id: "WA-011", caseId: "EWF-004", type: "approved", actor: "HR Admin", actorRole: "HR", action: "HR Review approved", timestamp: "2026-07-10 10:00", details: "HR approved department reallocation", fromState: "HR_Review", toState: "Risk_Review" },
+  // EWF-006: Bulk Import (Fresh Mart)
+  { id: "WA-012", caseId: "EWF-006", type: "created", actor: "Admin HR", actorRole: "HR", action: "Employee import file uploaded", timestamp: "2026-07-11 15:00", details: "File: fresh_mart_batch_2026-07-11.xlsx (12 rows)" },
+  { id: "WA-013", caseId: "EWF-006", type: "submitted", actor: "Admin HR", actorRole: "HR", action: "Submitted for validation", timestamp: "2026-07-11 15:30", details: "12 rows validated — 10 new, 2 modified" },
+  { id: "WA-014", caseId: "EWF-006", type: "submitted", actor: "Admin HR", actorRole: "HR", action: "Maker submitted for checker approval", timestamp: "2026-07-12 09:00", details: "Validation passed: 10 new, 2 modified, 0 incorrect", fromState: "Validation", toState: "Maker_Submitted" },
+  // EWF-009: Settlement
+  { id: "WA-015", caseId: "EWF-009", type: "created", actor: "HR Admin", actorRole: "HR", action: "Settlement submitted", timestamp: "2026-07-11 08:30", details: "SET-001 — 126,000 MMK bank transfer" },
+];
+
+export const importBatches: ImportBatch[] = [
+  { id: "IMP-2026-001", fileName: "golden_harvest_batch_2026-07-12.xlsx", uploadedBy: "Admin HR", uploadedAt: "2026-07-12 09:00", totalRows: 45, status: "Column_Mapping", newCount: 30, modifiedCount: 8, missingCount: 5, unchangedCount: 2, correctCount: 40, incorrectCount: 5, columnMapping: [{ fileColumn: "Employee ID", systemField: "employee_code", required: true }, { fileColumn: "Full Name", systemField: "name", required: true }, { fileColumn: "Phone", systemField: "phone", required: true }, { fileColumn: "Salary (MMK)", systemField: "salary", required: true }, { fileColumn: "Department", systemField: "department", required: false }, { fileColumn: "Branch", systemField: "branch_code", required: false }, { fileColumn: "Join Date", systemField: "join_date", required: false }, { fileColumn: "NRC", systemField: "nrc", required: false }], checkerId: undefined, checkerName: undefined, checkedAt: undefined, rejectReason: undefined },
+  { id: "IMP-2026-002", fileName: "fresh_mart_batch_2026-07-11.xlsx", uploadedBy: "Admin HR", uploadedAt: "2026-07-11 15:00", totalRows: 12, status: "Maker_Submitted", newCount: 10, modifiedCount: 2, missingCount: 0, unchangedCount: 0, correctCount: 12, incorrectCount: 0, columnMapping: [{ fileColumn: "Employee ID", systemField: "employee_code", required: true }, { fileColumn: "Full Name", systemField: "name", required: true }, { fileColumn: "Phone", systemField: "phone", required: true }, { fileColumn: "Salary (MMK)", systemField: "salary", required: true }, { fileColumn: "Department", systemField: "department", required: false }, { fileColumn: "Branch", systemField: "branch_code", required: false }], checkerId: undefined, checkerName: undefined, checkedAt: undefined, rejectReason: undefined },
+  { id: "IMP-2026-003", fileName: "skyline_trading_employees_2026-07-08.xlsx", uploadedBy: "Admin HR", uploadedAt: "2026-07-08 14:00", totalRows: 20, status: "Completed", newCount: 15, modifiedCount: 3, missingCount: 1, unchangedCount: 1, correctCount: 18, incorrectCount: 2, columnMapping: [{ fileColumn: "Employee ID", systemField: "employee_code", required: true }, { fileColumn: "Full Name", systemField: "name", required: true }, { fileColumn: "Phone", systemField: "phone", required: true }, { fileColumn: "Salary (MMK)", systemField: "salary", required: true }], checkerId: "ops-001", checkerName: "Ops Lead", checkedAt: "2026-07-09 10:00", rejectReason: undefined },
+  { id: "IMP-2026-004", fileName: "quick_print_hires_2026-07-05.xlsx", uploadedBy: "Admin HR", uploadedAt: "2026-07-05 09:00", totalRows: 8, status: "Checker_Rejected", newCount: 5, modifiedCount: 2, missingCount: 0, unchangedCount: 1, correctCount: 6, incorrectCount: 2, columnMapping: [{ fileColumn: "Employee ID", systemField: "employee_code", required: true }, { fileColumn: "Full Name", systemField: "name", required: true }, { fileColumn: "Salary (MMK)", systemField: "salary", required: true }], checkerId: "ops-001", checkerName: "Ops Lead", checkedAt: "2026-07-06 11:00", rejectReason: "2 rows have duplicate employee codes already in system. Please fix and re-upload." },
+];
+
+export const employeeImportTasks: EmployeeImportTask[] = [
+  { id: "EIT-001", employeeId: "emp-017", employeeName: "Aung Aung", employeeCode: "GH-004", companyId: "cmp-002", companyName: "Golden Harvest Trading", type: "add", status: "Pending", submittedAt: "2026-07-12 10:30", budgetOverflow: false },
+  { id: "EIT-002", employeeId: "emp-018", employeeName: "Thiri Thuriya", employeeCode: "GH-005", companyId: "cmp-002", companyName: "Golden Harvest Trading", type: "add", status: "Pending", submittedAt: "2026-07-12 10:30", budgetOverflow: true, budgetRequest: "BR-2026-005" },
+  { id: "EIT-003", employeeId: "emp-009", employeeName: "Min Tun", employeeCode: "ST-001", companyId: "cmp-003", companyName: "Skyline Trading Enterprise", type: "update", status: "Approved", submittedAt: "2026-07-08 15:00", reviewedAt: "2026-07-09 09:00", reviewer: "HR Admin", budgetOverflow: false },
+  { id: "EIT-004", employeeId: "emp-019", employeeName: "Ko Ko", employeeCode: "MTS-006", companyId: "cmp-001", companyName: "Myanmar Tech Solutions", type: "add", status: "Rejected", submittedAt: "2026-07-07 11:00", reviewedAt: "2026-07-07 14:00", reviewer: "HR Admin", budgetOverflow: true, budgetRequest: "BR-2026-006" },
+];
